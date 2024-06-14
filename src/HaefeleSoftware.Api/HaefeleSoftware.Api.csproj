@@ -28,7 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Common\Extensions\" />
       <Folder Include="Application\Interfaces\Repositories\" />
       <Folder Include="Domain\Entities\" />
       <Folder Include="Features\" />
