@@ -2,7 +2,7 @@
 
 public sealed class DatabaseSettings
 {
-    public const string ConnectionString = "";
+    public const string ConnectionString = "Database";
     
     public const string DefaultSchema = "dbo";
 }

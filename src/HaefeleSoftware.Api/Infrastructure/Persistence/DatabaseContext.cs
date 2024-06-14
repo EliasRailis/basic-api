@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Domain.Common;
+using HaefeleSoftware.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HaefeleSoftware.Api.Infrastructure.Persistence;
@@ -46,4 +47,8 @@ public sealed class DatabaseContext : DbContext, IDatabaseContext
         
         return await base.SaveChangesAsync(cancellationToken);
     }
+
+    public DbSet<User> Users { get; set; }
+    
+    public DbSet<Role> Roles { get; set; }
 }
