@@ -9,6 +9,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSerilog();
 builder.Services.AddBehaviors();
+builder.Services.AddDatabase(builder.Configuration);
 
 builder.Services.AddMediatR(configuration =>
 {
