@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B3FD2B9-144E-4AB8-956C-DA954C094463}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CD690A0B-5696-4B3E-A6D1-0E789A8540E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaefeleSoftware.Api", "src\HaefeleSoftware.Api\HaefeleSoftware.Api.csproj", "{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaefeleSoftware.UnitTests", "tests\HaefeleSoftware.UnitTests\HaefeleSoftware.UnitTests.csproj", "{93D618D8-E409-4C7C-AAC4-430383AC28DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD} = {4B3FD2B9-144E-4AB8-956C-DA954C094463}
+		{93D618D8-E409-4C7C-AAC4-430383AC28DD} = {CD690A0B-5696-4B3E-A6D1-0E789A8540E7}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AEA3C27-4FB9-43F3-A91D-C442917DA6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D618D8-E409-4C7C-AAC4-430383AC28DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D618D8-E409-4C7C-AAC4-430383AC28DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D618D8-E409-4C7C-AAC4-430383AC28DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D618D8-E409-4C7C-AAC4-430383AC28DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
