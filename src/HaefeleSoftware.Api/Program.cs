@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSerilog();
+builder.Services.AddBehaviors();
 
 builder.Services.AddMediatR(configuration =>
 {
