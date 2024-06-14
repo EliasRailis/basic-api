@@ -14,6 +14,7 @@ builder.Services.AddSerilog();
 builder.Services.AddBehaviors();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddEndpoints(typeof(Program).Assembly);
+builder.Services.AddRepositories();
 
 builder.Services.AddMediatR(configuration =>
 {
