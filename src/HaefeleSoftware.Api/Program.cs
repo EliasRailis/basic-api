@@ -1,6 +1,8 @@
 using System.Reflection;
 using FluentValidation;
 using HaefeleSoftware.Api.Application.Configurations;
+using HaefeleSoftware.Api.Application.Interfaces;
+using HaefeleSoftware.Api.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddMediatR(configuration =>
 });
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+builder.Services.AddTransient<IDateTimeService, DateTimeService>();
 
 var app = builder.Build();
 

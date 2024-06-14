@@ -1,17 +1,22 @@
 ﻿using System.Reflection;
+using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace HaefeleSoftware.Api.Infrastructure.Persistence;
 
-public sealed class DatabaseContext : DbContext
+public sealed class DatabaseContext : DbContext, IDatabaseContext
 {
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+    private readonly IDateTimeService _dateTime;
+    
+    public DatabaseContext(DbContextOptions<DatabaseContext> options, IDateTimeService dateTime) : base(options)
     {
+        _dateTime = dateTime;
     }
     
-    public DatabaseContext()
+    public DatabaseContext(IDateTimeService dateTime)
     {
+        _dateTime = dateTime;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -28,13 +33,13 @@ public sealed class DatabaseContext : DbContext
             switch (entry.State)
             {
                 case EntityState.Added:
-                    entry.Entity.Created = DateTime.UtcNow;
+                    entry.Entity.Created = _dateTime.Now;
                     break;
                 case EntityState.Modified:
-                    entry.Entity.LastModified = DateTime.UtcNow;
+                    entry.Entity.LastModified = _dateTime.Now;
                     break;
                 case EntityState.Deleted:
-                    entry.Entity.LastModified = DateTime.UtcNow;
+                    entry.Entity.LastModified = _dateTime.Now;
                     break;
             }
         }
