@@ -30,10 +30,7 @@
     <ItemGroup>
       <Folder Include="Application\Common\Extensions\" />
       <Folder Include="Application\Interfaces\" />
-      <Folder Include="Domain\Common\" />
-      <Folder Include="Domain\Dto\" />
       <Folder Include="Domain\Entities\" />
-      <Folder Include="Domain\Enums\" />
       <Folder Include="Features\" />
       <Folder Include="Infrastructure\Migrations\" />
       <Folder Include="Infrastructure\Persistence\" />
