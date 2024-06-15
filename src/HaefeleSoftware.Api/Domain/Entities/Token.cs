@@ -23,6 +23,4 @@ public sealed class Token : Audit
     public bool IsExpired { get; set; }
     
     public bool IsRevoked { get; set; }
-    
-    public bool IsDeleted { get; set; }
 }

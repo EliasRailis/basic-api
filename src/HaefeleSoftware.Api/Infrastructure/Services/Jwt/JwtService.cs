@@ -54,12 +54,7 @@ public sealed class JwtService : IJwtService
         return tokenHandler.WriteToken(token);
     }
 
-    public Token GenerateRefreshToken(User user)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Token GenerateRefreshToken(User user, string ipAddress)
+    public Token GenerateRefreshToken(User user, string? ipAddress)
     {
         return new Token
         {
@@ -67,9 +62,8 @@ public sealed class JwtService : IJwtService
             CreatedBy = user.Email,
             RefreshToken = GetUniqueRefreshToken(),
             ExpiresAt = _dateTimeService.Now.AddDays(10),
-            CreatedByIp = ipAddress,
+            CreatedByIp = ipAddress ?? string.Empty,
             FK_UserId = user.Id,
-            IsDeleted = false,
             IsExpired = false,
             IsRevoked = false
         };

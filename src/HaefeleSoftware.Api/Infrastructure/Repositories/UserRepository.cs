@@ -1,6 +1,7 @@
 ﻿using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
+using HaefeleSoftware.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HaefeleSoftware.Api.Infrastructure.Repositories;
@@ -24,5 +25,10 @@ public sealed class UserRepository : IUserRepository
                 Email = x.Email,
             })
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
     }
 }
