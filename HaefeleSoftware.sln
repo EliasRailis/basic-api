@@ -8,6 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaefeleSoftware.Api", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaefeleSoftware.UnitTests", "tests\HaefeleSoftware.UnitTests\HaefeleSoftware.UnitTests.csproj", "{93D618D8-E409-4C7C-AAC4-430383AC28DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{0899EB14-436D-4E17-ABB3-74FF0BD992A5}"
+	ProjectSection(SolutionItems) = preProject
+		db\role-seeds.sql = db\role-seeds.sql
+		db\run.sh = db\run.sh
+		db\Dockerfile = db\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

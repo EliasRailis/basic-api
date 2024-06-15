@@ -14,7 +14,7 @@ builder.Services.AddSerilog();
 builder.Services.AddBehaviors();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddEndpoints(typeof(Program).Assembly);
-builder.Services.AddRepositories();
+// builder.Services.AddRepositories();
 
 builder.Services.AddMediatR(configuration =>
 {
@@ -34,13 +34,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        IReadOnlyList<ApiVersionDescription> descriptions = app.DescribeApiVersions();
-
-        foreach (var desc in descriptions)
-        {
-            string url = $"/swagger/{desc.GroupName}/swagger.json";
-            options.SwaggerEndpoint(url, desc.GroupName.ToUpperInvariant());
-        }
+        // IReadOnlyList<ApiVersionDescription> descriptions = app.DescribeApiVersions();
+        //
+        // foreach (var desc in descriptions)
+        // {
+        //     string url = $"/swagger/{desc.GroupName}/swagger.json";
+        //     options.SwaggerEndpoint(url, desc.GroupName.ToUpperInvariant());
+        // }
     });
 }
 
