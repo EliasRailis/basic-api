@@ -8,5 +8,9 @@ public interface ITokenRepository
     
     Task<bool> UpdateTokensAsync(IEnumerable<Token> tokens);
     
+    Task<bool> UpdateTokenAsync(Token token);
+    
     Task<bool> AddTokenAsync(Token token);
+    
+    Task<Token?> GetRefreshTokenAsync(string token);
 }

@@ -29,6 +29,8 @@ builder.Services.AddMediatR(configuration =>
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddTransient<IDateTimeService, DateTimeService>();
+builder.Services.AddTransient<ICurrentUserService, CurrentUserService>();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

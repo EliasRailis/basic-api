@@ -27,9 +27,20 @@ public sealed class TokenRepository : ITokenRepository
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
 
+    public async Task<bool> UpdateTokenAsync(Token token)
+    {
+        _context.Tokens.Update(token);
+        return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+    }
+
     public async Task<bool> AddTokenAsync(Token token)
     {
         _context.Tokens.Add(token);
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+    }
+
+    public async Task<Token?> GetRefreshTokenAsync(string token)
+    {
+        return await _context.Tokens.FirstOrDefaultAsync(x => x.RefreshToken == token);
     }
 }

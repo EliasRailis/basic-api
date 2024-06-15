@@ -28,8 +28,8 @@ public sealed class AuthenticateEndpoint : IEndpoint
             
             var result = await sender.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
-            
-        }).MapToApiVersion(1);
+        })
+        .MapToApiVersion(1);
     }
 }
 
@@ -78,7 +78,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
 
             string token = _jwtService.GenerateToken(user);
             Token refreshToken = _jwtService.GenerateRefreshToken(user, request.IpAddress);
-            await UsersRefreshTokens(refreshToken, user.Id);
+            await UsersRefreshTokens(refreshToken, user.Id, user.Email);
 
             return new OnSuccess<AuthenticationResponse>
             {
@@ -102,7 +102,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
         }
     }
 
-    private async Task UsersRefreshTokens(Token refreshToken, int userId)
+    private async Task UsersRefreshTokens(Token refreshToken, int userId, string userEmail)
     {
         List<Token> tokens = await _tokenRepository.GetUserTokensAsync(userId);
 
@@ -111,6 +111,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
             foreach (var tk in tokens)
             {
                 tk.IsExpired = true;
+                tk.LastModifiedBy = userEmail;
             }
             
             await _tokenRepository.UpdateTokensAsync(tokens);
