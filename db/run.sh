@@ -16,4 +16,5 @@ do
 done
 
 # Run the SQL script
-/opt/mssql-tools/bin/sqlcmd -S database -U sa -P Elias123# -d master -i /role-seeds.sql
+/opt/mssql-tools/bin/sqlcmd -S database -U sa -P Elias123# -d master -i /role-seeds.sql 
+/opt/mssql-tools/bin/sqlcmd -S database -U sa -P Elias123# -d master -i /users-seeds.sql 
