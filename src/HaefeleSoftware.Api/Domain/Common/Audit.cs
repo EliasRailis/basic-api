@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace HaefeleSoftware.Api.Domain.Common;
+﻿namespace HaefeleSoftware.Api.Domain.Common;
 
 public class Audit
 {

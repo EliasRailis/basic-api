@@ -27,6 +27,7 @@ public sealed class RoleConfiguration : BaseConfiguration<Role>
 
         builder.HasMany(x => x.Users)
             .WithOne(x => x.Role)
-            .HasForeignKey(x => x.FK_RoleId);
+            .HasForeignKey(x => x.FK_RoleId)
+            .IsRequired();
     }
 }

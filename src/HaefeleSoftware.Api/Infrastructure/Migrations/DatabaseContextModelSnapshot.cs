@@ -73,6 +73,86 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     b.ToTable("roles", "dbo");
                 });
 
+            modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.Token", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created")
+                        .HasColumnOrder(1);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("created_by")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("CreatedByIp")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("created_by_ip");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime")
+                        .HasColumnName("expires_at");
+
+                    b.Property<int>("FK_UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("fk_user_id");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_expired");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_revoked");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasMaxLength(100)
+                        .HasColumnType("datetime2")
+                        .HasColumnName("last_modified")
+                        .HasColumnOrder(2);
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("last_modified_by")
+                        .HasColumnOrder(4);
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("refresh_token");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("revoked_by_ip");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FK_UserId");
+
+                    b.ToTable("tokens", "dbo");
+                });
+
             modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -103,7 +183,8 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                         .HasColumnName("email");
 
                     b.Property<int>("FK_RoleId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("fk_role_id");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -150,6 +231,17 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     b.ToTable("users", "dbo");
                 });
 
+            modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.Token", b =>
+                {
+                    b.HasOne("HaefeleSoftware.Api.Domain.Entities.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("FK_UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.User", b =>
                 {
                     b.HasOne("HaefeleSoftware.Api.Domain.Entities.Role", "Role")
@@ -164,6 +256,11 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
             modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("HaefeleSoftware.Api.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Tokens");
                 });
 #pragma warning restore 612, 618
         }

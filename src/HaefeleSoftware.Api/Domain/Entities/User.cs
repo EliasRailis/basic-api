@@ -23,4 +23,6 @@ public sealed class User : Audit
     public bool IsActive { get; set; }
     
     public bool IsDeleted { get; set; }
+
+    public ICollection<Token> Tokens { get; set; } = [];
 }

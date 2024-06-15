@@ -10,4 +10,6 @@ public interface IDatabaseContext
     DbSet<User> Users { get; set; }
     
     DbSet<Role> Roles { get; set; }
+    
+    DbSet<Token> Tokens { get; set; }
 }

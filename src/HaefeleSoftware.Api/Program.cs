@@ -1,9 +1,9 @@
 using System.Reflection;
-using Asp.Versioning.ApiExplorer;
 using FluentValidation;
 using HaefeleSoftware.Api.Application.Configurations;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Infrastructure.Services;
+using HaefeleSoftware.Api.Infrastructure.Services.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +14,8 @@ builder.Services.AddSerilog();
 builder.Services.AddBehaviors();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddEndpoints(typeof(Program).Assembly);
-// builder.Services.AddRepositories();
+builder.Services.AddAuth(builder.Configuration);
+builder.Services.AddRepositories();
 
 builder.Services.AddMediatR(configuration =>
 {
@@ -45,5 +46,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseJwtMiddleware();
 
 app.Run();

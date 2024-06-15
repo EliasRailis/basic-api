@@ -47,5 +47,13 @@ public sealed class UserConfiguration : BaseConfiguration<User>
             .HasColumnName("is_deleted")
             .HasColumnType("bit")
             .IsRequired();
+        
+        builder.HasMany(x => x.Tokens)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.FK_UserId)
+            .IsRequired();
+        
+        builder.Property(x => x.FK_RoleId)
+            .HasColumnName("fk_role_id");
     }
 }

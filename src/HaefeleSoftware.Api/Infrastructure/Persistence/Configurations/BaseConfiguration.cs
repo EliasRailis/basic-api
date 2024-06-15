@@ -19,7 +19,8 @@ public abstract class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T
             .HasColumnOrder(2)
             .HasColumnName("last_modified")
             .HasColumnType("datetime2")
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsRequired(false);
 
         builder.Property(x => x.CreatedBy)
             .HasColumnOrder(3)
@@ -32,7 +33,8 @@ public abstract class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T
             .HasColumnOrder(4)
             .HasColumnName("last_modified_by")
             .HasColumnType("nvarchar")
-            .HasMaxLength(255);
+            .HasMaxLength(255)
+            .IsRequired(false);
         
         ConfigureRemainingProperties(builder);
     }

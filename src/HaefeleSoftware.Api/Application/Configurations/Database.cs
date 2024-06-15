@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,6 @@ public static class Database
             );
         });
 
-        services.AddScoped<DatabaseContext>();
+        services.AddScoped<IDatabaseContext>(pr => pr.GetService<DatabaseContext>()!);
     }
 }
