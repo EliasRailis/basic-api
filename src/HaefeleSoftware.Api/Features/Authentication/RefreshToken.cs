@@ -23,14 +23,14 @@ public sealed class RefreshTokenEndpoint : IEndpoint
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
         app.MapPost("refresh-token", async (RefreshTokenRequest request, ISender sender, HttpContext context) =>
-            {
-                var command = _mapper.Map<RefreshTokenCommand>(request);
-                command.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        {
+            var command = _mapper.Map<RefreshTokenCommand>(request);
+            command.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
 
-                var result = await sender.Send(command);
-                return result.Match(Results.Ok, Results.BadRequest);
-            })
-            .MapToApiVersion(1);
+            var result = await sender.Send(command);
+            return result.Match(Results.Ok, Results.BadRequest);
+        })
+        .MapToApiVersion(1);
     }
 }
 
