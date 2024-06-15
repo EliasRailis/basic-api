@@ -17,7 +17,7 @@ public sealed class TokenRepository : ITokenRepository
     public async Task<List<Token>> GetUserTokensAsync(int userId)
     {
         return await _context.Tokens
-            .Where(x => x.FK_UserId == userId && !x.IsExpired && !x.IsRevoked)
+            .Where(x => x.FK_UserId == userId && !x.IsExpired)
             .ToListAsync();
     }
 
@@ -41,6 +41,8 @@ public sealed class TokenRepository : ITokenRepository
 
     public async Task<Token?> GetRefreshTokenAsync(string token)
     {
-        return await _context.Tokens.FirstOrDefaultAsync(x => x.RefreshToken == token);
+        return await _context.Tokens
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.RefreshToken == token);
     }
 }

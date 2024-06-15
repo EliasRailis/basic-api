@@ -78,7 +78,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
 
             string token = _jwtService.GenerateToken(user);
             Token refreshToken = _jwtService.GenerateRefreshToken(user, request.IpAddress);
-            await UsersRefreshTokens(refreshToken, user.Id, user.Email);
+            await _tokenRepository.AddTokenAsync(refreshToken);
 
             return new OnSuccess<AuthenticationResponse>
             {
@@ -100,24 +100,6 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
         {
             _logger.Information("Authentication request for {Email} has been processed.", request.Email);
         }
-    }
-
-    private async Task UsersRefreshTokens(Token refreshToken, int userId, string userEmail)
-    {
-        List<Token> tokens = await _tokenRepository.GetUserTokensAsync(userId);
-
-        if (tokens.Count != 0)
-        {
-            foreach (var tk in tokens)
-            {
-                tk.IsExpired = true;
-                tk.LastModifiedBy = userEmail;
-            }
-            
-            await _tokenRepository.UpdateTokensAsync(tokens);
-        }
-
-        await _tokenRepository.AddTokenAsync(refreshToken);
     }
 }
 
