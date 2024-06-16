@@ -1,4 +1,5 @@
-USE [haefele_db]
+USE
+[haefele_db]
 GO
 
 INSERT INTO [dbo].[roles]

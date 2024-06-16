@@ -23,7 +23,7 @@ public sealed class SongConfiguration : BaseConfiguration<Song>
         builder.Property(x => x.Duration)
             .HasColumnName("duration")
             .HasColumnType("nvarchar")
-            .HasMaxLength(10)
+            .HasMaxLength(20)
             .IsRequired();
         
         builder.Property(x => x.IsDeleted)

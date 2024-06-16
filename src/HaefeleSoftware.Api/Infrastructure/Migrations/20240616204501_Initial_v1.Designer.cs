@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HaefeleSoftware.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240616031436_Initial_v1")]
+    [Migration("20240616204501_Initial_v1")]
     partial class Initial_v1
     {
         /// <inheritdoc />
@@ -51,7 +51,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("Duration")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar")
                         .HasColumnName("duration");
 
@@ -87,7 +87,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("YearOfRelease")
                         .IsRequired()
-                        .HasMaxLength(5)
+                        .HasMaxLength(10)
                         .HasColumnType("nvarchar")
                         .HasColumnName("year_of_release");
 
@@ -331,7 +331,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("Duration")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar")
                         .HasColumnName("duration");
 

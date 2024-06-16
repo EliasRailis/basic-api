@@ -48,7 +48,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("Duration")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar")
                         .HasColumnName("duration");
 
@@ -84,7 +84,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("YearOfRelease")
                         .IsRequired()
-                        .HasMaxLength(5)
+                        .HasMaxLength(10)
                         .HasColumnType("nvarchar")
                         .HasColumnName("year_of_release");
 
@@ -328,7 +328,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
 
                     b.Property<string>("Duration")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("nvarchar")
                         .HasColumnName("duration");
 

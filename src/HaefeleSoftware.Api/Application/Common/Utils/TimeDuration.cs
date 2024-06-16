@@ -5,6 +5,6 @@ public static class TimeDuration
     public static string Format(int seconds)
     {
         var timeSpan = TimeSpan.FromSeconds(seconds);
-        return timeSpan.ToString(@"hh\:mm\:ss");
+        return timeSpan.ToString($"{timeSpan.Hours}h {timeSpan.Minutes}m {timeSpan.Seconds}s");
     }
 }

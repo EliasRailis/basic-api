@@ -64,8 +64,8 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    year_of_release = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-                    duration = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    year_of_release = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    duration = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     number_of_songs = table.Column<int>(type: "int", nullable: false),
                     is_deleted = table.Column<bool>(type: "bit", nullable: false),
                     fk_artist_id = table.Column<int>(type: "int", nullable: false)
@@ -125,7 +125,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    duration = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    duration = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     is_deleted = table.Column<bool>(type: "bit", nullable: false),
                     fk_album_id = table.Column<int>(type: "int", nullable: false)
                 },

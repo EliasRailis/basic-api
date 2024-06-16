@@ -14,6 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{0899EB14-436D-
 		db\run.sh = db\run.sh
 		db\Dockerfile = db\Dockerfile
 		db\users-seeds.sql = db\users-seeds.sql
+		db\albums-seeds.sql = db\albums-seeds.sql
+		db\artists-seeds.sql = db\artists-seeds.sql
+		db\songs-seeds.sql = db\songs-seeds.sql
 	EndProjectSection
 EndProject
 Global
