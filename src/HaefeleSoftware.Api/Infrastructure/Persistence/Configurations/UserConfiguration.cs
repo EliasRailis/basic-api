@@ -53,6 +53,11 @@ public sealed class UserConfiguration : BaseConfiguration<User>
             .HasForeignKey(x => x.FK_UserId)
             .IsRequired();
         
+        builder.HasMany(x => x.Libraries)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.FK_UserId)
+            .IsRequired();
+        
         builder.Property(x => x.FK_RoleId)
             .HasColumnName("fk_role_id");
     }

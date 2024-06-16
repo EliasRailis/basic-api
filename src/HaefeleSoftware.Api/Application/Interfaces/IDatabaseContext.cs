@@ -12,4 +12,14 @@ public interface IDatabaseContext
     DbSet<Role> Roles { get; set; }
     
     DbSet<Token> Tokens { get; set; }
+    
+    DbSet<Album> Albums { get; set; }
+    
+    DbSet<Library> Libraries { get; set; }
+    
+    DbSet<Artist> Artists { get; set; }
+    
+    DbSet<Song> Songs { get; set; }
+    
+    DbSet<LibraryAlbum> LibraryAlbums { get; set; }
 }

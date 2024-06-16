@@ -53,4 +53,14 @@ public sealed class DatabaseContext : DbContext, IDatabaseContext
     public DbSet<Role> Roles { get; set; }
     
     public DbSet<Token> Tokens { get; set; }
+    
+    public DbSet<Album> Albums { get; set; }
+    
+    public DbSet<Library> Libraries { get; set; }
+    
+    public DbSet<Artist> Artists { get; set; }
+    
+    public DbSet<Song> Songs { get; set; }
+    
+    public DbSet<LibraryAlbum> LibraryAlbums { get; set; }
 }
