@@ -13,5 +13,11 @@ public sealed class LibraryAlbumConfiguration : BaseConfiguration<LibraryAlbum>
         builder.Property(x => x.Id)
             .HasColumnOrder(0)
             .HasColumnName("id");
+        
+        builder.Property(x => x.FK_LibraryId)
+            .HasColumnName("fk_library_id");
+        
+        builder.Property(x => x.FK_AlbumId)
+            .HasColumnName("fk_album_id");
     }
 }

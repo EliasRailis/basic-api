@@ -30,5 +30,8 @@ public sealed class SongConfiguration : BaseConfiguration<Song>
             .HasColumnName("is_deleted")
             .HasColumnType("bit")
             .IsRequired();
+        
+        builder.Property(x => x.FK_AlbumId)
+            .HasColumnName("fk_album_id");
     }
 }

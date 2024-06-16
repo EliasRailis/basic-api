@@ -225,10 +225,12 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                         .HasColumnOrder(3);
 
                     b.Property<int>("FK_AlbumId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("fk_album_id");
 
                     b.Property<int>("FK_LibraryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("fk_library_id");
 
                     b.Property<DateTime?>("LastModified")
                         .HasMaxLength(100)
@@ -331,7 +333,8 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                         .HasColumnName("duration");
 
                     b.Property<int>("FK_AlbumId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("fk_album_id");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit")

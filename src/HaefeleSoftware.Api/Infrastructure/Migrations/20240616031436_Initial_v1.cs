@@ -6,11 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HaefeleSoftware.Api.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class MoreTables_v1 : Migration
+    public partial class Initial_v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "artists",
                 schema: "dbo",
@@ -31,7 +34,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "libraries",
+                name: "roles",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -42,19 +45,11 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    is_deleted = table.Column<bool>(type: "bit", nullable: false),
-                    fk_user_id = table.Column<int>(type: "int", nullable: false)
+                    is_deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_libraries", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_libraries_users_fk_user_id",
-                        column: x => x.fk_user_id,
-                        principalSchema: "dbo",
-                        principalTable: "users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_roles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +83,7 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "library_albums",
+                name: "users",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -98,24 +93,22 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     last_modified = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: true),
                     created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    FK_LibraryId = table.Column<int>(type: "int", nullable: false),
-                    FK_AlbumId = table.Column<int>(type: "int", nullable: false)
+                    first_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    last_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    password_hash = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    fk_role_id = table.Column<int>(type: "int", nullable: false),
+                    is_active = table.Column<bool>(type: "bit", nullable: false),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_library_albums", x => x.id);
+                    table.PrimaryKey("PK_users", x => x.id);
                     table.ForeignKey(
-                        name: "FK_library_albums_albums_FK_AlbumId",
-                        column: x => x.FK_AlbumId,
+                        name: "FK_users_roles_fk_role_id",
+                        column: x => x.fk_role_id,
                         principalSchema: "dbo",
-                        principalTable: "albums",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_library_albums_libraries_FK_LibraryId",
-                        column: x => x.FK_LibraryId,
-                        principalSchema: "dbo",
-                        principalTable: "libraries",
+                        principalTable: "roles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -134,16 +127,108 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     duration = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     is_deleted = table.Column<bool>(type: "bit", nullable: false),
-                    FK_AlbumId = table.Column<int>(type: "int", nullable: false)
+                    fk_album_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_songs", x => x.id);
                     table.ForeignKey(
-                        name: "FK_songs_albums_FK_AlbumId",
-                        column: x => x.FK_AlbumId,
+                        name: "FK_songs_albums_fk_album_id",
+                        column: x => x.fk_album_id,
                         principalSchema: "dbo",
                         principalTable: "albums",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "libraries",
+                schema: "dbo",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    created = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
+                    last_modified = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: true),
+                    created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: false),
+                    fk_user_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_libraries", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_libraries_users_fk_user_id",
+                        column: x => x.fk_user_id,
+                        principalSchema: "dbo",
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tokens",
+                schema: "dbo",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    created = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
+                    last_modified = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: true),
+                    created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    refresh_token = table.Column<string>(type: "nvarchar(1500)", maxLength: 1500, nullable: false),
+                    expires_at = table.Column<DateTime>(type: "datetime", maxLength: 100, nullable: false),
+                    created_by_ip = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    revoked_by_ip = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    fk_user_id = table.Column<int>(type: "int", nullable: false),
+                    is_expired = table.Column<bool>(type: "bit", nullable: false),
+                    is_revoked = table.Column<bool>(type: "bit", nullable: false),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tokens", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_tokens_users_fk_user_id",
+                        column: x => x.fk_user_id,
+                        principalSchema: "dbo",
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "library_albums",
+                schema: "dbo",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    created = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
+                    last_modified = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: true),
+                    created_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    last_modified_by = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    fk_library_id = table.Column<int>(type: "int", nullable: false),
+                    fk_album_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_library_albums", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_library_albums_albums_fk_album_id",
+                        column: x => x.fk_album_id,
+                        principalSchema: "dbo",
+                        principalTable: "albums",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_library_albums_libraries_fk_library_id",
+                        column: x => x.fk_library_id,
+                        principalSchema: "dbo",
+                        principalTable: "libraries",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -161,22 +246,34 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                 column: "fk_user_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_library_albums_FK_AlbumId",
+                name: "IX_library_albums_fk_album_id",
                 schema: "dbo",
                 table: "library_albums",
-                column: "FK_AlbumId");
+                column: "fk_album_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_library_albums_FK_LibraryId",
+                name: "IX_library_albums_fk_library_id",
                 schema: "dbo",
                 table: "library_albums",
-                column: "FK_LibraryId");
+                column: "fk_library_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_songs_FK_AlbumId",
+                name: "IX_songs_fk_album_id",
                 schema: "dbo",
                 table: "songs",
-                column: "FK_AlbumId");
+                column: "fk_album_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tokens_fk_user_id",
+                schema: "dbo",
+                table: "tokens",
+                column: "fk_user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_fk_role_id",
+                schema: "dbo",
+                table: "users",
+                column: "fk_role_id");
         }
 
         /// <inheritdoc />
@@ -191,6 +288,10 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "tokens",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "libraries",
                 schema: "dbo");
 
@@ -199,7 +300,15 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "users",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "artists",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "roles",
                 schema: "dbo");
         }
     }
