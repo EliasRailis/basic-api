@@ -31,8 +31,4 @@
         <Using Remove="Microsoft.Extensions.Logging"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Infrastructure\Migrations\" />
-    </ItemGroup>
-
 </Project>

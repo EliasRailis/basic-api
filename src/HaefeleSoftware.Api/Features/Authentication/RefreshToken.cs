@@ -47,16 +47,14 @@ public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCom
     private readonly ILogger _logger;
     private readonly ITokenRepository _tokenRepository;
     private readonly IJwtService _jwtService;
-    private readonly IUserRepository _userRepository;
     private readonly CurrentUser? _currentUser;
 
     public RefreshTokenCommandHandler(ILogger logger, ITokenRepository tokenRepository,
-        IJwtService jwtService, ICurrentUserService currentUser, IUserRepository userRepository)
+        IJwtService jwtService, ICurrentUserService currentUser)
     {
         _logger = logger;
         _tokenRepository = tokenRepository;
         _jwtService = jwtService;
-        _userRepository = userRepository;
         _currentUser = currentUser.User;
     }
 
@@ -72,10 +70,14 @@ public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCom
                 return new OnError(HttpStatusCode.NotFound, "Refresh token not found.");
             }
 
-            if (oldRefreshToken.ExpiresAt < DateTime.UtcNow || oldRefreshToken.IsRevoked)
+            if (oldRefreshToken.ExpiresAt < DateTime.Now || oldRefreshToken.IsRevoked)
             {
-                await ExpireUserTokens(_currentUser!.Id, _currentUser.Email);
+                await ExpireUserTokens(oldRefreshToken!.FK_UserId, oldRefreshToken.User.Email);
                 return new OnError(HttpStatusCode.Unauthorized, "Invalid refresh token.");
+            }
+            else
+            {
+                await SoftDeleteUserTokens(oldRefreshToken!.FK_UserId, oldRefreshToken.User.Email);
             }
 
             string jwtToken = _jwtService.GenerateToken(oldRefreshToken.User);
@@ -113,6 +115,20 @@ public sealed class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCom
         foreach (var rtk in refreshTokens)
         {
             rtk.IsExpired = true;
+            rtk.IsDeleted = true;
+            rtk.LastModifiedBy = userEmail;
+        }
+
+        await _tokenRepository.UpdateTokensAsync(refreshTokens);
+    }
+    
+    private async Task SoftDeleteUserTokens(int userId, string? userEmail)
+    {
+        List<Token> refreshTokens = await _tokenRepository.GetUserTokensAsync(userId);
+
+        foreach (var rtk in refreshTokens)
+        {
+            rtk.IsDeleted = true;
             rtk.LastModifiedBy = userEmail;
         }
 

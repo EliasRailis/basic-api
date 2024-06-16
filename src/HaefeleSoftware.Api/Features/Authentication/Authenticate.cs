@@ -82,6 +82,8 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
             }
 
             string token = _jwtService.GenerateToken(user);
+
+            await ExpireUserTokens(user.Id, user.Email);
             Token refreshToken = _jwtService.GenerateRefreshToken(user, request.IpAddress);
             await _tokenRepository.AddTokenAsync(refreshToken);
 
@@ -106,6 +108,20 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
             _logger.Information("Authentication request for {Email} has been processed.", request.Email);
         }
     }
+    
+    private async Task ExpireUserTokens(int userId, string? userEmail)
+    {
+        List<Token> refreshTokens = await _tokenRepository.GetUserTokensAsync(userId);
+
+        foreach (var rtk in refreshTokens)
+        {
+            rtk.IsExpired = true;
+            rtk.IsDeleted = true;
+            rtk.LastModifiedBy = userEmail;
+        }
+
+        await _tokenRepository.UpdateTokensAsync(refreshTokens);
+    } 
 }
 
 public sealed class AuthenticationValidator : AbstractValidator<AuthenticateCommand>

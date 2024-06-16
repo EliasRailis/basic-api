@@ -39,10 +39,12 @@ public static class Authentication
             };
         });
 
-        service.AddAuthorizationBuilder()
-            .AddPolicy(IdentityRoles.Admin, pol => 
-                pol.RequireClaim(IdentityRoles.ClaimName, IdentityRoles.Admin))
-            .AddPolicy(IdentityRoles.Customer, pol => 
+        service.AddAuthorization(x =>
+        {
+            x.AddPolicy(IdentityRoles.Admin, pol =>
+                pol.RequireClaim(IdentityRoles.ClaimName, IdentityRoles.Admin));
+            x.AddPolicy(IdentityRoles.Customer, pol => 
                 pol.RequireClaim(IdentityRoles.ClaimName, IdentityRoles.Customer));
+        });
     }
 }

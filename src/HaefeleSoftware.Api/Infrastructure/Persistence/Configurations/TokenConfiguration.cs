@@ -38,6 +38,11 @@ public sealed class TokenConfiguration : BaseConfiguration<Token>
             .HasMaxLength(255)
             .IsRequired(false);
         
+        builder.Property(x => x.IsDeleted)
+            .HasColumnName("is_deleted")
+            .HasColumnType("bit")
+            .IsRequired();
+        
         builder.Property(x => x.IsExpired)
             .HasColumnName("is_expired")
             .HasColumnType("bit")

@@ -81,7 +81,8 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     revoked_by_ip = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     fk_user_id = table.Column<int>(type: "int", nullable: false),
                     is_expired = table.Column<bool>(type: "bit", nullable: false),
-                    is_revoked = table.Column<bool>(type: "bit", nullable: false)
+                    is_revoked = table.Column<bool>(type: "bit", nullable: false),
+                    is_deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

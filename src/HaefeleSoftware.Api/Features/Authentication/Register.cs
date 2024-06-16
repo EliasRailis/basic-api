@@ -65,7 +65,7 @@ public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand,
 
             if (emailExists)
             {
-                return new OnError(HttpStatusCode.BadRequest, "Email already exists.");
+                return new OnError(HttpStatusCode.BadRequest, "This account already exists.");
             }
 
             var user = new User

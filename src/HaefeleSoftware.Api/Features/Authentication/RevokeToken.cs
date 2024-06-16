@@ -86,7 +86,7 @@ public sealed class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenComma
         }
         catch (Exception ex)
         {
-            _logger.Error("Failed to revoke token {RefreshToken} with message {ErrroMessage}", 
+            _logger.Error("Failed to revoke token {RefreshToken} with message {ErrorMessage}", 
                 request.RefreshToken, ex.Message);
             return new OnError(HttpStatusCode.BadRequest, "Failed to revoke token");
         }

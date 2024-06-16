@@ -111,6 +111,10 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("fk_user_id");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_deleted");
+
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit")
                         .HasColumnName("is_expired");

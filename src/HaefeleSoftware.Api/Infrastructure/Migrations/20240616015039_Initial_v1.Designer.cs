@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HaefeleSoftware.Api.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240616002253_Initial_v1")]
+    [Migration("20240616015039_Initial_v1")]
     partial class Initial_v1
     {
         /// <inheritdoc />
@@ -113,6 +113,10 @@ namespace HaefeleSoftware.Api.Infrastructure.Migrations
                     b.Property<int>("FK_UserId")
                         .HasColumnType("int")
                         .HasColumnName("fk_user_id");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_deleted");
 
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit")
