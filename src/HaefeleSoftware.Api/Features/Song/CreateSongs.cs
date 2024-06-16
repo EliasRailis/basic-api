@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AutoMapper;
 using FluentValidation;
+using HaefeleSoftware.Api.Application.Common.Utils;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
@@ -77,7 +78,7 @@ public sealed class CreateSongsCommandHandler : IRequestHandler<CreateSongsComma
                 albumSongs.Songs.Add(new Domain.Entities.Song
                 {
                     Name = songs.Name.Trim(),
-                    Duration = SecondsToTime(songs.Duration),
+                    Duration = TimeDuration.Format(songs.Duration),
                     IsDeleted = false,
                     FK_AlbumId = request.AlbumId
                 });
@@ -105,12 +106,6 @@ public sealed class CreateSongsCommandHandler : IRequestHandler<CreateSongsComma
         {
             _logger.Information("Request completed.");
         }
-    }
-    
-    private static string SecondsToTime(int seconds)
-    {
-        TimeSpan time = TimeSpan.FromSeconds(seconds);
-        return time.ToString(@"hh\:mm\:ss");
     }
 }
 

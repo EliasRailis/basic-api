@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AutoMapper;
 using FluentValidation;
+using HaefeleSoftware.Api.Application.Common.Utils;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
@@ -81,7 +82,7 @@ public sealed class CreateAlbumCommandHandler : IRequestHandler<CreateAlbumComma
                 FK_ArtistId = request.ArtistId,
                 Name = request.Name.Trim(),
                 YearOfRelease = request.YearOfRelease,
-                Duration = SecondsToTime(request.DurationIsSeconds),
+                Duration = TimeDuration.Format(request.DurationIsSeconds),
                 CreatedBy = _currentUser?.Email!
             };
             
@@ -107,12 +108,6 @@ public sealed class CreateAlbumCommandHandler : IRequestHandler<CreateAlbumComma
         {
             _logger.Information("Request completed.");
         }
-    }
-    
-    private static string SecondsToTime(int seconds)
-    {
-        TimeSpan time = TimeSpan.FromSeconds(seconds);
-        return time.ToString(@"hh\:mm\:ss");
     }
 }
 

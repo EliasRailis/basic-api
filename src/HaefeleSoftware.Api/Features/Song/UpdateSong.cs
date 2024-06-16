@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AutoMapper;
 using FluentValidation;
+using HaefeleSoftware.Api.Application.Common.Utils;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
@@ -81,7 +82,7 @@ public sealed class UpdateSongCommandHandler : IRequestHandler<UpdateSongCommand
             }
             
             song.Name = request.Name.Trim();
-            song.Duration = SecondsToTime(request.Duration);
+            song.Duration = TimeDuration.Format(request.Duration);
             song.LastModifiedBy = _currentUser?.Email;
             bool updated = await _songRepository.UpdateSongAsync(song);
             
@@ -104,12 +105,6 @@ public sealed class UpdateSongCommandHandler : IRequestHandler<UpdateSongCommand
         {
             _logger.Information("Request completed.");
         }
-    }
-    
-    private static string SecondsToTime(int seconds)
-    {
-        TimeSpan time = TimeSpan.FromSeconds(seconds);
-        return time.ToString(@"hh\:mm\:ss");
     }
 }
 

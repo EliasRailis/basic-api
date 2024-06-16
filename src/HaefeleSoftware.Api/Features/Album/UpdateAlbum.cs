@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AutoMapper;
 using FluentValidation;
+using HaefeleSoftware.Api.Application.Common.Utils;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
@@ -81,7 +82,7 @@ public sealed class UpdateAlbumCommandHandler : IRequestHandler<UpdateAlbumComma
             
             album.Name = request.Name.Trim();
             album.YearOfRelease = request.YearOfRelease;
-            album.Duration = SecondsToTime(request.DurationIsSeconds);
+            album.Duration = TimeDuration.Format(request.DurationIsSeconds);
             album.LastModifiedBy = _currentUser?.Email;
             bool updated = await _albumRepository.UpdateAlbumAsync(album);
             
@@ -104,12 +105,6 @@ public sealed class UpdateAlbumCommandHandler : IRequestHandler<UpdateAlbumComma
         {
             _logger.Information("Request completed.");
         }
-    }
-    
-    private static string SecondsToTime(int seconds)
-    {
-        TimeSpan time = TimeSpan.FromSeconds(seconds);
-        return time.ToString(@"hh\:mm\:ss");
     }
 }
 
