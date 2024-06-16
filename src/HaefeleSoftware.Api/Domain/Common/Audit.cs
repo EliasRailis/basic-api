@@ -2,9 +2,9 @@
 
 public class Audit
 {
-    public required DateTime Created { get; set; }
+    public DateTime Created { get; set; }
     
-    public required string CreatedBy { get; set; } 
+    public string CreatedBy { get; set; } = default!; 
     
     public DateTime? LastModified { get; set; }
     

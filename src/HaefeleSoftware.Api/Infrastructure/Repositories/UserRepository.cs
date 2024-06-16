@@ -31,4 +31,15 @@ public sealed class UserRepository : IUserRepository
     {
         return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
     }
+
+    public async Task<bool> DoesEmailExistAsync(string email)
+    {
+        return await _context.Users.AnyAsync(x => x.Email == email.Trim());
+    }
+
+    public async Task<bool> AddUserAsync(User user)
+    {
+        _context.Users.Add(user);
+        return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+    }
 }

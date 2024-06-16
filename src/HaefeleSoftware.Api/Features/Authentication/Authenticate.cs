@@ -46,15 +46,15 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
     Result<OnSuccess<AuthenticationResponse>, OnError>>
 {
     private readonly ILogger _logger;
-    private readonly IUserRepository _repository;
+    private readonly IUserRepository _userRepository;
     private readonly ITokenRepository _tokenRepository;
     private readonly IJwtService _jwtService;
 
-    public AuthenticateCommandHandler(ILogger logger, IUserRepository repository,
+    public AuthenticateCommandHandler(ILogger logger, IUserRepository userRepository,
         IJwtService jwtService, ITokenRepository tokenRepository)
     {
         _logger = logger;
-        _repository = repository;
+        _userRepository = userRepository;
         _jwtService = jwtService;
         _tokenRepository = tokenRepository;
     }
@@ -64,7 +64,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
     {
         try
         {
-            User? user = await _repository.GetUserByEmailAsync(request.Email);
+            User? user = await _userRepository.GetUserByEmailAsync(request.Email);
 
             if (user is null)
             {
