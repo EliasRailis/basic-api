@@ -9,5 +9,6 @@ public static class Repositories
     {
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<ITokenRepository, TokenRepository>();
+        services.AddTransient<IAlbumRepository, AlbumRepository>();
     }
 }
