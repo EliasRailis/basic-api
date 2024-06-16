@@ -71,6 +71,11 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
                 return new OnError(HttpStatusCode.NotFound, "Account not found.");
             }
 
+            if (!user.IsActive || user.IsDeleted)
+            {
+                return new OnError(HttpStatusCode.BadRequest, "Account is deactivated.");
+            }
+
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 return new OnError(HttpStatusCode.BadRequest, "Invalid password.");
