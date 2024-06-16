@@ -68,7 +68,8 @@ public sealed class UpdateLibraryCommandHandler : IRequestHandler<UpdateLibraryC
                 return new OnError(HttpStatusCode.NotFound, "Library not found.");
             }
 
-            User? userLibraries = await _libraryRepository.GetUserLibrariesByIdAsync(library.FK_UserId);
+            Domain.Entities.User? userLibraries = await _libraryRepository
+                .GetUserLibrariesByIdAsync(library.FK_UserId);
             
             if (userLibraries is null)
             {

@@ -27,6 +27,11 @@ public sealed class UserRepository : IUserRepository
             .FirstOrDefaultAsync();
     }
 
+    public async Task<User?> GetUserByIdAsync(int id)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<User?> GetUserByEmailAsync(string email)
     {
         return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
@@ -40,6 +45,12 @@ public sealed class UserRepository : IUserRepository
     public async Task<bool> AddUserAsync(User user)
     {
         _context.Users.Add(user);
+        return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+    }
+
+    public async Task<bool> UpdateUserAsync(User user)
+    {
+        _context.Users.Update(user);
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
 }

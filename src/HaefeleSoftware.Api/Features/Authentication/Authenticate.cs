@@ -64,7 +64,7 @@ public sealed class AuthenticateCommandHandler : IRequestHandler<AuthenticateCom
     {
         try
         {
-            User? user = await _userRepository.GetUserByEmailAsync(request.Email);
+            Domain.Entities.User? user = await _userRepository.GetUserByEmailAsync(request.Email);
 
             if (user is null)
             {

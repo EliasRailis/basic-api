@@ -10,5 +10,8 @@ public static class Repositories
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<ITokenRepository, TokenRepository>();
         services.AddTransient<IAlbumRepository, AlbumRepository>();
+        services.AddTransient<ISongRepository, SongRepository>();
+        services.AddTransient<IArtistRepository, ArtistRepository>();
+        services.AddTransient<ILibraryRepository, LibraryRepository>();
     }
 }

@@ -68,7 +68,7 @@ public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand,
                 return new OnError(HttpStatusCode.BadRequest, "This account already exists.");
             }
 
-            var user = new User
+            var user = new Domain.Entities.User
             {
                 FirstName = request.FirstName.Trim(),
                 LastName = request.LastName.Trim(),
