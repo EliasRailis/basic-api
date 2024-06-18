@@ -21,7 +21,7 @@ public sealed class RemoveAlbumEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapDelete("library/add", async (RemoveAlbumRequest request, ISender sender) =>
+        app.MapDelete("libraries/add", async (RemoveAlbumRequest request, ISender sender) =>
         {
             var command = _mapper.Map<RemoveAlbumCommand>(request);
             var result = await sender.Send(command);

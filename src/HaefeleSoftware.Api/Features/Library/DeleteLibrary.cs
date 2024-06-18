@@ -13,7 +13,7 @@ public sealed class DeleteLibraryEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapDelete("library/delete/{id:int}", async (int id, ISender sender) =>
+        app.MapDelete("libraries/delete/{id:int}", async (int id, ISender sender) =>
         {
             var result = await sender.Send(new DeleteLibraryCommand(id));
             return result.Match(Results.Ok, Results.BadRequest);

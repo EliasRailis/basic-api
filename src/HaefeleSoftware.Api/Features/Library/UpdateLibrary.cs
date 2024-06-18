@@ -21,7 +21,7 @@ public sealed class UpdateLibraryEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("library/update", async (UpdateLibraryRequest request, ISender sender) =>
+        app.MapPost("libraries/update", async (UpdateLibraryRequest request, ISender sender) =>
         {
             var command = _mapper.Map<UpdateLibraryCommand>(request);
             var result = await sender.Send(command);

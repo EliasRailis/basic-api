@@ -21,7 +21,7 @@ public sealed class CreateLibraryEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("library/create", async (CreateLibraryRequest request, ISender sender) =>
+        app.MapPost("libraries/create", async (CreateLibraryRequest request, ISender sender) =>
         {
             var command = _mapper.Map<CreateLibraryCommand>(request);
             var result = await sender.Send(command);
