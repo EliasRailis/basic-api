@@ -41,6 +41,7 @@ public sealed class LibraryRepository : ILibraryRepository
         return await _context.Users
             .Include(x => x.Libraries)
             .ThenInclude(x => x.LibraryAlbums)
+            .ThenInclude(x => x.Album)
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync();
     }
@@ -48,6 +49,12 @@ public sealed class LibraryRepository : ILibraryRepository
     public async Task<bool> AddAlbumToLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum)
     {
         _context.LibraryAlbums.AddRange(libraryAlbum);
+        return await _context.SaveChangesAsync(new CancellationToken()) > 0;
+    }
+
+    public async Task<bool> RemoveAlbumFromLibraryAsync(LibraryAlbum libraryAlbum)
+    {
+        _context.LibraryAlbums.Remove(libraryAlbum);
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
 }

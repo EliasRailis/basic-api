@@ -17,7 +17,7 @@ public sealed class GetAlbumsEndpoint : IEndpoint
     {
         app.MapGet("albums", async ([FromQuery] int? orderType, [FromQuery] int? orderBy, ISender sender) =>
         {
-            var result = await sender.Send(new GetAlbumsCommand(orderType, orderBy));
+            var result = await sender.Send(new GetAlbumsQuery(orderType, orderBy));
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)
@@ -25,32 +25,32 @@ public sealed class GetAlbumsEndpoint : IEndpoint
     }
 }
 
-public sealed class GetAlbumsCommand : IRequest<Result<OnSuccess<GetAlbumsResponse>, OnError>>
+public sealed class GetAlbumsQuery : IRequest<Result<OnSuccess<GetAlbumsResponse>, OnError>>
 {
     public int? OrderType { get; }
     
     public int? OrderBy { get; }
 
-    public GetAlbumsCommand(int? orderType, int? orderBy)
+    public GetAlbumsQuery(int? orderType, int? orderBy)
     {
         OrderType = orderType;
         OrderBy = orderBy;
     }
 }
 
-public sealed class GetAlbumsCommandHandler : IRequestHandler<GetAlbumsCommand,
+public sealed class GetAlbumsQueryHandler : IRequestHandler<GetAlbumsQuery,
     Result<OnSuccess<GetAlbumsResponse>, OnError>>
 {
     private readonly ILogger _logger;
     private readonly IAlbumRepository _albumRepository;
 
-    public GetAlbumsCommandHandler(ILogger logger, IAlbumRepository albumRepository)
+    public GetAlbumsQueryHandler(ILogger logger, IAlbumRepository albumRepository)
     {
         _logger = logger;
         _albumRepository = albumRepository;
     }
 
-    public async Task<Result<OnSuccess<GetAlbumsResponse>, OnError>> Handle(GetAlbumsCommand request,
+    public async Task<Result<OnSuccess<GetAlbumsResponse>, OnError>> Handle(GetAlbumsQuery request,
         CancellationToken cancellationToken)
     {
         try
@@ -130,7 +130,7 @@ public sealed class GetAlbumsCommandHandler : IRequestHandler<GetAlbumsCommand,
     }
 }
 
-public sealed class GetAlbumsValidator : AbstractValidator<GetAlbumsCommand>
+public sealed class GetAlbumsValidator : AbstractValidator<GetAlbumsQuery>
 {
     public GetAlbumsValidator()
     {
