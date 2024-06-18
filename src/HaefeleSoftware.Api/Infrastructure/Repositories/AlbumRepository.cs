@@ -37,4 +37,13 @@ public sealed class AlbumRepository : IAlbumRepository
         _context.Albums.Update(album);
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
+
+    public async Task<IEnumerable<Album>> GetAllActiveAlbumsAsync()
+    {
+        return await _context.Albums
+            .Include(x => x.Artist)
+            .Include(x => x.Songs)
+            .Where(x => !x.IsDeleted)
+            .ToListAsync();
+    }
 }

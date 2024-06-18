@@ -11,4 +11,6 @@ public interface IAlbumRepository
     Task<Album?> GetAlbumByIdAsync(int id);
     
     Task<bool> UpdateAlbumAsync(Album album);
+
+    Task<IEnumerable<Album>> GetAllActiveAlbumsAsync();
 }

@@ -22,7 +22,7 @@ public sealed class CreateAlbumEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("album/create", async (CreateAlbumRequest request, ISender sender) =>
+        app.MapPost("albums/create", async (CreateAlbumRequest request, ISender sender) =>
         {
             var command = _mapper.Map<CreateAlbumCommand>(request);
             var result = await sender.Send(command);

@@ -23,7 +23,7 @@ public sealed class UpdateAlbumEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("album/update", async (UpdateAlbumRequest request, ISender sender) =>
+        app.MapPost("albums/update", async (UpdateAlbumRequest request, ISender sender) =>
         {
             var command = _mapper.Map<UpdateAlbumCommand>(request);
             var result = await sender.Send(command);

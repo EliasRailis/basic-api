@@ -13,7 +13,7 @@ public sealed class DeleteAlbumEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapDelete("album/delete/{id:int}", async (int id, ISender sender) =>
+        app.MapDelete("albums/delete/{id:int}", async (int id, ISender sender) =>
         {
             var result = await sender.Send(new DeleteAlbumCommand(id));
             return result.Match(Results.Ok, Results.BadRequest);
