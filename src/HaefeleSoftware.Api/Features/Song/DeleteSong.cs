@@ -38,13 +38,15 @@ public sealed class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand
 {
     private readonly ILogger _logger;
     private readonly ISongRepository _songRepository;
+    private readonly IAlbumRepository _albumRepository;
     private readonly CurrentUser? _currentUser;
 
     public DeleteSongCommandHandler(ILogger logger, ISongRepository songRepository, 
-        ICurrentUserService currentUser)
+        ICurrentUserService currentUser, IAlbumRepository albumRepository)
     {
         _logger = logger;
         _songRepository = songRepository;
+        _albumRepository = albumRepository;
         _currentUser = currentUser.User;
     }
 
@@ -63,6 +65,18 @@ public sealed class DeleteSongCommandHandler : IRequestHandler<DeleteSongCommand
             song.IsDeleted = true;
             song.LastModifiedBy = _currentUser?.Email;
             bool updated = await _songRepository.UpdateSongAsync(song);
+
+            if (updated)
+            {
+                Domain.Entities.Album? album = await _albumRepository.GetAlbumByIdAsync(song.FK_AlbumId);
+
+                if (album is not null)
+                {
+                    album.NumberOfSongs--;
+                    album.LastModifiedBy = _currentUser?.Email;
+                    await _albumRepository.UpdateAlbumAsync(album);
+                }
+            }
             
             return new OnSuccess<DeleteSongResponse>
             {

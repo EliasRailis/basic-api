@@ -87,7 +87,7 @@ public sealed class AddAlbumCommandHandler : IRequestHandler<AddAlbumCommand,
                 CreatedBy = _currentUser?.Email!
             });
             
-            bool added = await _libraryRepository.AddAlbumToLibraryAsync(library.LibraryAlbums);
+            bool added = await _libraryRepository.UpdateAlbumsInLibraryAsync(library.LibraryAlbums);
             
             return new OnSuccess<AddAlbumResponse>
             {

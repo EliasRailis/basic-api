@@ -21,7 +21,7 @@ public sealed class UpdateArtistEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("artist/update", async (UpdateArtistRequest request, ISender sender) =>
+        app.MapPost("artists/update", async (UpdateArtistRequest request, ISender sender) =>
         {
             var command = _mapper.Map<UpdateArtistCommand>(request);
             var result = await sender.Send(command);

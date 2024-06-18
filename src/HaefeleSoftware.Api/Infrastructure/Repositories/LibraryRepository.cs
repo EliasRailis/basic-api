@@ -46,9 +46,9 @@ public sealed class LibraryRepository : ILibraryRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task<bool> AddAlbumToLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum)
+    public async Task<bool> UpdateAlbumsInLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum)
     {
-        _context.LibraryAlbums.AddRange(libraryAlbum);
+        _context.LibraryAlbums.UpdateRange(libraryAlbum);
         return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
 

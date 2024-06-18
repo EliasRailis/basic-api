@@ -55,7 +55,7 @@ public sealed class GetLibrariesQueryHandler : IRequestHandler<GetLibrariesQuery
             }
 
             var response = new List<LibraryInformationDto>();
-            foreach (var library in userLibraries.Libraries)
+            foreach (var library in userLibraries.Libraries.Where(x => !x.IsDeleted))
             {
                 response.Add(new LibraryInformationDto
                 {

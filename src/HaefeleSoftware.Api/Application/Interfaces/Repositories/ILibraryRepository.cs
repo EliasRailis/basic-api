@@ -14,7 +14,7 @@ public interface ILibraryRepository
     
     Task<User?> GetUserLibrariesByIdAsync(int id);
     
-    Task<bool> AddAlbumToLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum);
+    Task<bool> UpdateAlbumsInLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum);
     
     Task<bool> RemoveAlbumFromLibraryAsync(LibraryAlbum libraryAlbum);
 }

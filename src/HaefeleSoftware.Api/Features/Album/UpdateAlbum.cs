@@ -42,7 +42,7 @@ public sealed class UpdateAlbumCommand : IRequest<Result<OnSuccess<UpdateAlbumRe
 
     public string YearOfRelease { get; init; } = default!;
     
-    public int DurationIsSeconds { get; init; }
+    public int DurationInSeconds { get; init; }
 }
 
 public sealed class UpdateAlbumCommandHandler : IRequestHandler<UpdateAlbumCommand, 
@@ -82,7 +82,7 @@ public sealed class UpdateAlbumCommandHandler : IRequestHandler<UpdateAlbumComma
             
             album.Name = request.Name.Trim();
             album.YearOfRelease = request.YearOfRelease;
-            album.Duration = TimeDuration.Format(request.DurationIsSeconds);
+            album.Duration = TimeDuration.Format(request.DurationInSeconds);
             album.LastModifiedBy = _currentUser?.Email;
             bool updated = await _albumRepository.UpdateAlbumAsync(album);
             
@@ -124,7 +124,7 @@ public sealed class UpdateAlbumValidator : AbstractValidator<UpdateAlbumCommand>
             .NotEmpty()
             .WithMessage("Year of release is required.");
         
-        RuleFor(x => x.DurationIsSeconds)
+        RuleFor(x => x.DurationInSeconds)
             .NotEmpty()
             .WithMessage("Duration in seconds is required.")
             .GreaterThan(0)
@@ -136,7 +136,7 @@ public sealed class UpdateAlbumMappingProfile : Profile
 {
     public UpdateAlbumMappingProfile()
     {
-        CreateMap<UpdateArtistRequest, UpdateArtistCommand>();
+        CreateMap<UpdateAlbumRequest, UpdateAlbumCommand>();
     }
 }
 
@@ -148,7 +148,7 @@ public sealed class UpdateAlbumRequest
 
     public string YearOfRelease { get; init; } = default!;
     
-    public int DurationIsSeconds { get; init; }
+    public int DurationInSeconds { get; init; }
 }
 
 public sealed class UpdateAlbumResponse

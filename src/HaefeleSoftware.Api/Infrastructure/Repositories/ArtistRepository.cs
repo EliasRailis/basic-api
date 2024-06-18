@@ -16,8 +16,7 @@ public sealed class ArtistRepository : IArtistRepository
 
     public async Task<bool> DoesArtistExistAsync(string name)
     {
-        return await _context.Artists.AnyAsync(x => 
-            x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+        return await _context.Artists.AnyAsync(x => x.Name == name.Trim());
     }
 
     public async Task<bool> AddArtistAsync(Artist artist)

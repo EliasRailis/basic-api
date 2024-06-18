@@ -46,13 +46,15 @@ public sealed class CreateSongsCommandHandler : IRequestHandler<CreateSongsComma
 {
     private readonly ILogger _logger;
     private readonly ISongRepository _songRepository;
+    private readonly IAlbumRepository _albumRepository;
     private readonly CurrentUser? _currentUser;
 
     public CreateSongsCommandHandler(ILogger logger, ISongRepository songRepository, 
-        ICurrentUserService currentUser)
+        ICurrentUserService currentUser, IAlbumRepository albumRepository)
     {
         _logger = logger;
         _songRepository = songRepository;
+        _albumRepository = albumRepository;
         _currentUser = currentUser.User;
     }
 
@@ -68,23 +70,33 @@ public sealed class CreateSongsCommandHandler : IRequestHandler<CreateSongsComma
                 return new OnError(HttpStatusCode.NotFound, "Album not found.");
             }
 
-            foreach (var songs in request.Songs)
+            var newSongs = new List<Domain.Entities.Song>();
+            foreach (var song in request.Songs)
             {
-                if (albumSongs.Songs.Where(x => !x.IsDeleted).Any(x => x.Name == songs.Name.Trim()))
+                if (albumSongs.Songs.Where(x => !x.IsDeleted).Any(x => x.Name == song.Name.Trim()))
                 {
                     continue;
                 }
                 
-                albumSongs.Songs.Add(new Domain.Entities.Song
+                newSongs.Add(new Domain.Entities.Song
                 {
-                    Name = songs.Name.Trim(),
-                    Duration = TimeDuration.Format(songs.Duration),
+                    Name = song.Name.Trim(),
+                    Duration = TimeDuration.Format(song.Duration),
                     IsDeleted = false,
-                    FK_AlbumId = request.AlbumId
+                    FK_AlbumId = request.AlbumId,
+                    CreatedBy = _currentUser?.Email!
                 });
+                
+                albumSongs.NumberOfSongs++;
             }
             
-            bool created = await _songRepository.AddSongsAsync(albumSongs.Songs);
+            bool created = await _songRepository.AddSongsAsync(newSongs);
+
+            if (created)
+            {
+                albumSongs.LastModifiedBy = _currentUser?.Email;
+                await _albumRepository.UpdateAlbumAsync(albumSongs);
+            }
             
             return new OnSuccess<CreateSongsResponse>
             {

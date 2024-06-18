@@ -41,7 +41,7 @@ public sealed class CreateAlbumCommand : IRequest<Result<OnSuccess<CreateAlbumRe
 
     public string YearOfRelease { get; init; } = default!;
     
-    public int DurationIsSeconds { get; init; }
+    public int DurationInSeconds { get; init; }
 }
 
 public sealed class CreateAlbumCommandHandler : IRequestHandler<CreateAlbumCommand, 
@@ -82,7 +82,7 @@ public sealed class CreateAlbumCommandHandler : IRequestHandler<CreateAlbumComma
                 FK_ArtistId = request.ArtistId,
                 Name = request.Name.Trim(),
                 YearOfRelease = request.YearOfRelease,
-                Duration = TimeDuration.Format(request.DurationIsSeconds),
+                Duration = TimeDuration.Format(request.DurationInSeconds),
                 CreatedBy = _currentUser?.Email!
             };
             
@@ -123,7 +123,7 @@ public sealed class CreateAlbumValidator : AbstractValidator<CreateAlbumCommand>
             .NotEmpty()
             .WithMessage("Year of release is required.");
 
-        RuleFor(x => x.DurationIsSeconds)
+        RuleFor(x => x.DurationInSeconds)
             .GreaterThan(0)
             .WithMessage("Duration in seconds must be greater than 0.")
             .NotEmpty()
@@ -147,7 +147,7 @@ public sealed class CreateAlbumRequest
 
     public string YearOfRelease { get; init; } = default!;
     
-    public int DurationIsSeconds { get; init; }
+    public int DurationInSeconds { get; init; }
 }
 
 public sealed class CreateAlbumResponse
