@@ -4,7 +4,6 @@ using FluentValidation;
 using HaefeleSoftware.Api.Application.Common.Extensions;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
-using HaefeleSoftware.Api.Domain.Entities;
 using HaefeleSoftware.Api.Domain.Enums;
 using HaefeleSoftware.Api.Domain.Types;
 using MediatR;

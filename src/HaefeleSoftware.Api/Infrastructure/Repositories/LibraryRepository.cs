@@ -40,7 +40,14 @@ public sealed class LibraryRepository : ILibraryRepository
     {
         return await _context.Users
             .Include(x => x.Libraries)
+            .ThenInclude(x => x.LibraryAlbums)
             .Where(x => x.Id == id)
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<bool> AddAlbumToLibraryAsync(IEnumerable<LibraryAlbum> libraryAlbum)
+    {
+        _context.LibraryAlbums.AddRange(libraryAlbum);
+        return await _context.SaveChangesAsync(new CancellationToken()) > 0;
     }
 }

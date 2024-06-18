@@ -4,7 +4,6 @@ using FluentValidation;
 using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
-using HaefeleSoftware.Api.Domain.Entities;
 using HaefeleSoftware.Api.Domain.Types;
 using MediatR;
 using Serilog;
