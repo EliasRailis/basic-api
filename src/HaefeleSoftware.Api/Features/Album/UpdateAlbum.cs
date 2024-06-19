@@ -6,7 +6,6 @@ using HaefeleSoftware.Api.Application.Interfaces;
 using HaefeleSoftware.Api.Application.Interfaces.Repositories;
 using HaefeleSoftware.Api.Domain.Common;
 using HaefeleSoftware.Api.Domain.Types;
-using HaefeleSoftware.Api.Features.Artist;
 using MediatR;
 using Serilog;
 
