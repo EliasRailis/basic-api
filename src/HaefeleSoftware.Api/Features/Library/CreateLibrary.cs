@@ -21,10 +21,10 @@ public sealed class CreateLibraryEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("libraries/create", async (CreateLibraryRequest request, ISender sender) =>
+        app.MapPost("libraries/create", async (CreateLibraryRequest request, IMediator mediator) =>
         {
             var command = _mapper.Map<CreateLibraryCommand>(request);
-            var result = await sender.Send(command);
+            var result = await mediator.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

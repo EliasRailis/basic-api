@@ -13,9 +13,9 @@ public sealed class DeactivateUserEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/deactivate/{id:int}", async (int id, ISender sender) =>
+        app.MapPost("users/deactivate/{id:int}", async (int id, IMediator mediator) =>
         {
-            var result = await sender.Send(new DeactivateUserCommand(id));
+            var result = await mediator.Send(new DeactivateUserCommand(id));
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

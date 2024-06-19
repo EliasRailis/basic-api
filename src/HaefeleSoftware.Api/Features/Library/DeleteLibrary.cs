@@ -13,9 +13,9 @@ public sealed class DeleteLibraryEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapDelete("libraries/delete/{id:int}", async (int id, ISender sender) =>
+        app.MapDelete("libraries/delete/{id:int}", async (int id, IMediator mediator) =>
         {
-            var result = await sender.Send(new DeleteLibraryCommand(id));
+            var result = await mediator.Send(new DeleteLibraryCommand(id));
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

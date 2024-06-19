@@ -14,9 +14,9 @@ public sealed class GetLibrariesEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet("libraries", async (ISender sender) =>
+        app.MapGet("libraries", async (IMediator mediator) =>
         {
-            var result = await sender.Send(new GetLibrariesQuery());
+            var result = await mediator.Send(new GetLibrariesQuery());
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

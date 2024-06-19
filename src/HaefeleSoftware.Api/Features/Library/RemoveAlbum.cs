@@ -21,10 +21,10 @@ public sealed class RemoveAlbumEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("libraries/remove", async (RemoveAlbumRequest request, ISender sender) =>
+        app.MapPost("libraries/remove", async (RemoveAlbumRequest request, IMediator mediator) =>
         {
             var command = _mapper.Map<RemoveAlbumCommand>(request);
-            var result = await sender.Send(command);
+            var result = await mediator.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

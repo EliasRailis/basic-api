@@ -22,10 +22,10 @@ public sealed class CreateAlbumEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("albums/create", async (CreateAlbumRequest request, ISender sender) =>
+        app.MapPost("albums/create", async (CreateAlbumRequest request, IMediator mediator) =>
         {
             var command = _mapper.Map<CreateAlbumCommand>(request);
-            var result = await sender.Send(command);
+            var result = await mediator.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

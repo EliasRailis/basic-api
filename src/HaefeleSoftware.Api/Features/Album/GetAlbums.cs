@@ -15,9 +15,9 @@ public sealed class GetAlbumsEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet("albums", async ([FromQuery] int? orderType, [FromQuery] int? orderBy, ISender sender) =>
+        app.MapGet("albums", async ([FromQuery] int? orderType, [FromQuery] int? orderBy, IMediator mediator) =>
         {
-            var result = await sender.Send(new GetAlbumsQuery(orderType, orderBy));
+            var result = await mediator.Send(new GetAlbumsQuery(orderType, orderBy));
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

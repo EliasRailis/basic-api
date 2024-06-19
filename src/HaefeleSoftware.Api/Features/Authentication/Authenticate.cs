@@ -21,12 +21,12 @@ public sealed class AuthenticateEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("authenticate", async (AuthenticationRequest request, ISender sender, HttpContext context) =>
+        app.MapPost("authenticate", async (AuthenticationRequest request, IMediator mediator, HttpContext context) =>
         {
             var command = _mapper.Map<AuthenticateCommand>(request);
             command.IpAddress = context.Connection.RemoteIpAddress?.MapToIPv4().ToString();
             
-            var result = await sender.Send(command);
+            var result = await mediator.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1);

@@ -13,9 +13,9 @@ public sealed class DeleteSongEndpoint : IEndpoint
 {
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapDelete("songs/delete/{id:int}", async (int id, ISender sender) =>
+        app.MapDelete("songs/delete/{id:int}", async (int id, IMediator mediator) =>
         {
-            var result = await sender.Send(new DeleteSongCommand(id));
+            var result = await mediator.Send(new DeleteSongCommand(id));
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)

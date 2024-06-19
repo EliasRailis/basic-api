@@ -10,13 +10,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaefeleSoftware.UnitTests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{0899EB14-436D-4E17-ABB3-74FF0BD992A5}"
 	ProjectSection(SolutionItems) = preProject
-		db\role-seeds.sql = db\role-seeds.sql
 		db\run.sh = db\run.sh
 		db\Dockerfile = db\Dockerfile
-		db\users-seeds.sql = db\users-seeds.sql
 		db\albums-seeds.sql = db\albums-seeds.sql
 		db\artists-seeds.sql = db\artists-seeds.sql
+		db\role-seeds.sql = db\role-seeds.sql
 		db\songs-seeds.sql = db\songs-seeds.sql
+		db\users-seeds.sql = db\users-seeds.sql
 	EndProjectSection
 EndProject
 Global

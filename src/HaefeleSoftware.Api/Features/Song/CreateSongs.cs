@@ -23,10 +23,10 @@ public sealed class CreateSongsEndpoint : IEndpoint
 
     public void MapEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapPost("songs/create", async (CreateSongsRequest request, ISender sender) =>
+        app.MapPost("songs/create", async (CreateSongsRequest request, IMediator mediator) =>
         {
             var command = _mapper.Map<CreateSongsCommand>(request);
-            var result = await sender.Send(command);
+            var result = await mediator.Send(command);
             return result.Match(Results.Ok, Results.BadRequest);
         })
         .MapToApiVersion(1)
